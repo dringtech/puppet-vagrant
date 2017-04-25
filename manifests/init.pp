@@ -15,9 +15,15 @@ class vagrant(
     default => 'absent',
   }
 
+  if $version > '1.9.2' {
+    $source = "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_x86_64.dmg"
+  } else {
+    $source = "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}.dmg"
+  }
+
   package { "Vagrant_${version}":
     ensure   => installed,
-    source   => "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}.dmg",
+    source   => $source,
     provider => 'pkgdmg'
   }
 
